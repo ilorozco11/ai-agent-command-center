@@ -13,10 +13,15 @@ Verified on 23 November 2026 using Node.js `v24.22.3`.
 
 The review corrected focus handling when a filtered review queue becomes empty and prevented closing a task/reset dialog while its mutation is pending.
 
+## GitHub publication verification
+
+The repository was published on 23 November 2026. GitHub Actions completed successfully for source commit `95c900dd1f4c6904733d53a4e36d954189d0e818` on both Node 22 and Node 24. Both matrix jobs passed the test suite and browser JavaScript syntax check.
+
+[View the successful workflow run](https://github.com/ilorozco11/ai-agent-command-center/actions/runs/45178012680). This is evidence for that exact source commit; later workflow runs remain visible in the repository's Actions tab.
+
 ## Not verified in this preparation environment
 
 - Rendered browser layout, mobile rendering, and end-to-end browser interaction. The available browser environment could not access the local server; no screenshot or visual-conformance claim is provided.
-- The GitHub Actions workflow on a remote runner. The committed workflow targets Node 22 and 24; the local test result above is for Node 24 only.
 - Any live Devin, GitHub, GitLab, Teams, billing, or authentication integration. Those capabilities are not implemented by the current demo.
 
 This record describes prototype correctness checks. It is not a productivity benchmark or evidence of real agent execution.
