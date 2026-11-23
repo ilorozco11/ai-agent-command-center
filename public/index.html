@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="An interactive, local-only prototype for monitoring AI development sessions and human approval checkpoints." />
+    <title>AI Agent Command Center · Demo</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to work queue</a>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Workspace navigation">
+        <a class="brand" href="#main" aria-label="Command Center home">
+          <span class="brand-mark" aria-hidden="true">cc<span>↗</span></span>
+          <span>COMMAND<br />CENTER<span class="brand-sub">AI DEVELOPMENT</span></span>
+        </a>
+        <div class="workspace-label"><span class="workspace-dot" aria-hidden="true"></span> Local workspace <span class="mono">01</span></div>
+        <nav class="navigation" aria-label="Primary">
+          <a href="#queue-section" class="nav-item active" aria-current="page"><span aria-hidden="true">▦</span> Sessions <span class="nav-counter" id="nav-count">—</span></a>
+          <button type="button" class="nav-item" id="pilot-open"><span aria-hidden="true">↗</span> Pilot scope</button>
+          <button type="button" class="nav-item" id="integrations-open"><span aria-hidden="true">⊞</span> Integrations <span class="small-label">PLAN</span></button>
+        </nav>
+        <div class="sidebar-bottom">
+          <span class="eyebrow">Built for oversight</span>
+          <p>Agent work.<br />Human decisions.</p>
+          <div class="sidebar-note">Local simulation<br />No external accounts connected</div>
+          <button type="button" class="reset-button" id="reset-open">Reset demo <span aria-hidden="true">↺</span></button>
+        </div>
+      </aside>
+
+      <main id="main" tabindex="-1">
+        <div class="topline"><span>WORKSPACE <span aria-hidden="true">/</span> OVERVIEW</span><span class="mode-label"><span aria-hidden="true">◌</span> DEMO MODE</span></div>
+        <header class="page-header">
+          <div><p class="eyebrow">Observe. Inspect. Decide.</p><h1>AI Agent Command Center</h1><p class="page-description">A clear view of the work. A deliberate checkpoint before completion.</p></div>
+          <button class="button primary" type="button" id="task-open"><span aria-hidden="true">+</span> New demo task</button>
+        </header>
+
+        <div class="demo-banner"><span class="tag">PROTOTYPE</span><p>All sessions, checks and ACU values are simulated. Devin is not connected.</p><button type="button" class="text-button" id="about-demo">What works here <span aria-hidden="true">↗</span></button></div>
+        <div class="notification" role="alert" id="error-banner" hidden><p id="error-text"></p><button type="button" class="button small" id="retry">Retry</button><button type="button" class="icon-button" id="error-dismiss" aria-label="Dismiss error">×</button></div>
+        <p class="sr-only" role="status" aria-live="polite" id="announcement"></p>
+
+        <section class="scope-bar" aria-label="Session scope">
+          <div><span class="eyebrow">View</span><strong id="scope-label">All demo sessions</strong></div>
+          <div class="refresh-group"><span id="freshness">Loading state…</span><button type="button" class="text-button" id="refresh"><span aria-hidden="true">↻</span> Refresh</button></div>
+        </section>
+
+        <section class="summary-strip" aria-label="Summary of the filtered sessions">
+          <div class="summary-item"><div><span class="metric-label">In progress</span><strong id="metric-running">—</strong></div><p>Running sessions in this view</p></div>
+          <div class="summary-item"><div><span class="metric-label">Needs a decision</span><strong id="metric-review">—</strong></div><button type="button" class="metric-link" id="review-filter">View approval queue <span aria-hidden="true">↗</span></button></div>
+          <div class="summary-item"><div><span class="metric-label">Illustrative usage</span><strong><span id="metric-acu">—</span><span class="metric-unit"> ACU</span></strong></div><p>Sum for this view · not actual billing</p></div>
+        </section>
+
+        <div class="work-area">
+          <section class="queue-section" id="queue-section" aria-labelledby="queue-title">
+            <div class="section-header"><div><h2 id="queue-title">Work queue</h2><span class="section-caption">Attention first, then newest</span></div><span class="count-label" id="result-count">Loading…</span></div>
+            <div class="filters">
+              <div class="search-field"><label for="search" class="sr-only">Search task title, repository, session ID or role</label><span aria-hidden="true">⌕</span><input type="search" id="search" placeholder="Search sessions…" autocomplete="off" /></div>
+              <div class="status-field"><label for="status-filter" class="sr-only">Filter sessions by status</label><select id="status-filter"><option value="all">All statuses</option><option value="awaiting_approval">Needs approval</option><option value="running">Running</option><option value="queued">Queued</option><option value="blocked">Blocked</option><option value="completed">Completed</option><option value="failed">Failed</option><option value="cancelled">Cancelled</option></select></div>
+            </div>
+            <div class="table-scroll" role="region" aria-label="Demo sessions" tabindex="0">
+              <table><caption class="sr-only">Demo sessions, sorted by attention required and creation time. Select a task to inspect its details.</caption><thead><tr><th scope="col">Task / repository</th><th scope="col">Status</th><th scope="col" class="numeric">ACU</th></tr></thead><tbody id="sessions-body"><tr><td colspan="3" class="loading-row">Loading demo sessions…</td></tr></tbody></table>
+            </div>
+            <div class="empty-state" id="empty-state" hidden><span aria-hidden="true">∅</span><h3>No sessions in this view</h3><p>Try a different search or clear the status filter.</p><button type="button" class="button small" id="clear-filters">Clear filters</button></div>
+            <div class="queue-footer"><span id="queue-total">All data is local to this demo.</span><span class="mono">SIMULATION / V0.1</span></div>
+            <section class="workflow-explainer" aria-labelledby="workflow-title"><span class="eyebrow" id="workflow-title">The proposed workflow</span><ol><li><span>01</span> Define task</li><li><span>02</span> Agent works</li><li><span>03</span> Review evidence</li><li><span>04</span> Human approval</li></ol><p>This prototype models the control flow. Real coding, PRs and checks are part of the planned pilot.</p></section>
+          </section>
+
+          <aside class="detail-panel" id="detail-panel" aria-labelledby="detail-heading" aria-busy="true"><div class="detail-placeholder"><span class="eyebrow">Session inspector</span><h2 id="detail-heading">Loading session…</h2><p>Activity and approval evidence will appear here.</p></div></aside>
+        </div>
+        <footer class="page-footer"><span>AI Agent Command Center <span aria-hidden="true">/</span> Independent prototype</span><span>Sample events shown in UTC · No external changes</span><button type="button" class="text-button mobile-reset" id="reset-mobile">Reset demo ↺</button></footer>
+      </main>
+    </div>
+
+    <dialog id="task-dialog" aria-labelledby="task-dialog-title">
+      <form id="task-form"><div class="dialog-top"><span class="eyebrow">Create a simulation</span><button class="icon-button" type="button" data-close-dialog="task-dialog" aria-label="Close new task dialog">×</button></div><h2 id="task-dialog-title">Give an agent a task.</h2><p class="dialog-description">Add a local session to explore the workflow. This will not start a Devin session or access a repository.</p><label class="field-label" for="task-title">Task title</label><input type="text" id="task-title" name="title" required minlength="3" maxlength="160" placeholder="Add keyboard navigation to the settings menu" /><label class="field-label" for="task-repository">Repository label</label><input id="task-repository" name="repository" required maxlength="160" value="demo/example-app" pattern="[A-Za-z0-9][A-Za-z0-9_.\-]*/[A-Za-z0-9][A-Za-z0-9_.\-]*" /><p class="field-hint">Use owner/repository. This is a display label only.</p><p class="form-error" id="task-error" role="alert" hidden></p><div class="dialog-actions"><button class="button" type="button" data-close-dialog="task-dialog">Cancel</button><button class="button primary" type="submit" id="task-submit">Create demo task <span aria-hidden="true">↗</span></button></div></form>
+    </dialog>
+
+    <dialog id="info-dialog" aria-labelledby="info-title"><div class="dialog-top"><span class="eyebrow">Project notes</span><button class="icon-button" type="button" data-close-dialog="info-dialog" aria-label="Close project notes">×</button></div><div id="info-content"></div><div class="dialog-actions"><button class="button primary" type="button" data-close-dialog="info-dialog">Back to workspace</button></div></dialog>
+
+    <dialog id="reset-dialog" aria-labelledby="reset-title"><div class="dialog-top"><span class="eyebrow">Local demo</span><button class="icon-button" type="button" data-close-dialog="reset-dialog" aria-label="Close reset dialog">×</button></div><h2 id="reset-title">Reset the simulation?</h2><p class="dialog-description">This replaces the local session list with the starter examples. Tasks and decisions made in this demo will be cleared.</p><p class="form-error" id="reset-error" role="alert" hidden></p><div class="dialog-actions"><button class="button" type="button" data-close-dialog="reset-dialog">Keep current sessions</button><button class="button primary" type="button" id="reset-confirm">Reset demo</button></div></dialog>
+  </body>
+</html>

@@ -1,0 +1,30 @@
+name: Pilot task
+description: Define a bounded development task and its acceptance evidence.
+title: "[Pilot]: "
+body:
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Intended outcome
+      description: State the concrete development problem and permitted repository scope.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Describe observable success, required tests, and human review requirements.
+    validations:
+      required: true
+  - type: textarea
+    id: limits
+    attributes:
+      label: Limits and exclusions
+      description: Specify time/resource limits, allowed files, and actions requiring approval.
+    validations:
+      required: true
+  - type: textarea
+    id: evaluation
+    attributes:
+      label: Evaluation evidence
+      description: Record session references, reviewed results, failures, interventions, and actual usage after the task. Leave unknown values unknown.
